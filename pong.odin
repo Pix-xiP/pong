@@ -4,14 +4,22 @@ import "core:fmt"
 
 import rl "vendor:raylib"
 
+Score :: struct {
+	p1: i32,
+	p2: i32,
+}
+
 Player :: struct {
 	pos:   rl.Vector2,
+	size:  rl.Vector2,
 	speed: f32,
 }
 
 Ball :: struct {
-	pos:   rl.Vector2,
-	speed: f32,
+	pos:      rl.Vector2,
+	size:     rl.Vector2,
+	movement: rl.Vector2,
+	speed:    f32,
 }
 
 G :: 400
@@ -32,11 +40,12 @@ run_game :: proc() {
 
 	rl.InitWindow(screen_w, screen_h, "Pong!")
 	defer rl.CloseWindow()
+	score := Score{0, 0}
 
-	p1 := Player{{450, 280}, 0}
-	p2 := Player{{1150, 280}, 0}
+	p1 := Player{{450, 280}, {20, 20}, 0}
+	p2 := Player{{1150, 280}, {20, 20}, 0}
 
-	ball := Ball{{700, 280}, 1}
+	ball := Ball{{screen_w / 2, screen_h / 2}, {20, 20}, {1, 1}}
 
 	camera := rl.Camera2D{0, {f32(screen_w) / 2.0, f32(screen_h) / 2.0}, 0.0, 1}
 
